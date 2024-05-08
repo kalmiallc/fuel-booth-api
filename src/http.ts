@@ -13,6 +13,7 @@ import { inject as injectRenders } from "./middlewares/renders";
 import { inject as injectGetRoot } from "./routes/get-root";
 import { inject as injectCreateUser } from "./routes/create-user";
 import { inject as injectGetUser } from "./routes/get-user";
+import { inject as injectGetBalance } from "./routes/get-balance";
 export interface Request extends express.Request {
   context: Context;
   body: { [key: string]: any };
@@ -68,6 +69,7 @@ export class HttpServer {
     injectGetRoot(this.app);
     injectCreateUser(this.app);
     injectGetUser(this.app);
+    injectGetBalance(this.app);
 
     // ERROR HANDLER
     injectErrors(this.app);
