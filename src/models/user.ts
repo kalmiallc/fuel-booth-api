@@ -14,9 +14,7 @@ import { SqlError } from "../lib/errors";
 import { getQueryParams, selectAndCountQuery } from "../lib/sql-utils";
 
 export class User extends BaseSqlModel {
-  /**
-   * wallet
-   */
+
   protected _tableName = "user";
 
   /**
@@ -31,10 +29,10 @@ export class User extends BaseSqlModel {
       SerializedStrategy.ADMIN,
     ],
     validators: [
-      {
-        resolver: presenceValidator(),
-        code: ValidatorErrorCode.PROFILE_EMAIL_NOT_PRESENT,
-      },
+      // {
+      //   resolver: presenceValidator(),
+      //   code: ValidatorErrorCode.PROFILE_EMAIL_NOT_PRESENT,
+      // },
       {
         resolver: uniqueFieldValue("user", "email"),
         code: ValidatorErrorCode.PROFILE_EMAIL_ALREADY_TAKEN,
@@ -45,7 +43,7 @@ export class User extends BaseSqlModel {
   public email: string;
 
   /**
-   * nft_id
+   * username
    */
   @prop({
     parser: { resolver: stringParser() },
@@ -55,9 +53,80 @@ export class User extends BaseSqlModel {
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
     ],
+    validators: [
+      {
+        resolver: presenceValidator(),
+        code: ValidatorErrorCode.PROFILE_USERNAME_NOT_PRESENT,
+      },
+      {
+        resolver: uniqueFieldValue("user", "username"),
+        code: ValidatorErrorCode.PROFILE_USERNAME_ALREADY_TAKEN,
+      },
+    ],
     fakeValue: "user",
   })
   public username: string;
+
+  /**
+   * username_hash
+   */
+  @prop({
+    parser: { resolver: stringParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: "user_hash",
+  })
+  public username_hash: string;
+
+  /**
+   * username_email_hash
+   */
+  @prop({
+    parser: { resolver: stringParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: "username_email_hash",
+  })
+  public username_email_hash: string;
+
+  /**
+   * high_score
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: 0,
+  })
+  public high_score: number;
+
+  /**
+   * player_contract_index_id
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: 0,
+  })
+  public player_contract_index_id: number;
+
 
   /**
    * Class constructor.
@@ -133,7 +202,9 @@ export class User extends BaseSqlModel {
     const sqlQuery = {
       qSelect: `
         SELECT
-          u.id, u.email, u.username,
+          u.id, u.email, u.username, u.username_hash,
+          u.high_score, u.player_contract_index_id,
+          u.username_email_hash,
           u.createTime, u.updateTime
         `,
       qFrom: `

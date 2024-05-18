@@ -91,4 +91,6 @@ export const env = {
   MYSQL_USER_TEST: process.env["MYSQL_USER_TEST"],
   MYSQL_PASSWORD_TEST: process.env["MYSQL_PASSWORD_TEST"],
   MYSQL_POOL_TEST: parseInt(process.env["MYSQL_POOL_TEST"]),
+  CONTRACT_ID: process.env['CONTRACT_ID'],
+  SIGNER_PRIVATE_KEY: process.env['SIGNER_PRIVATE_KEY'],
 };
