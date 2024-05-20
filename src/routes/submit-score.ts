@@ -28,7 +28,7 @@ export async function resolveFinalScore(req: Request, res: Response): Promise<vo
   
     try {
       const transactionId = await submit_final_score(username, time_seconds, damage);
-      return res.respond(201, { success: "ok", transactionId });
+      return res.respond(201, { success: "ok", transactionId: transactionId });
     } catch (error) {
       if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
         return res.respond(409, { error: "Username does not exists" });
@@ -51,10 +51,10 @@ export async function resolveTrackScore(req: Request, res: Response): Promise<vo
   
     try {
       const transactionId = await submit_track_score(username, Number(time_seconds), Number(damage), Number(distance), Number(speed));
-      return res.respond(200, { success: "ok", transactionId });
+      return res.respond(200, { success: "ok", transactionId: transactionId });
     } catch (error) {
       if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
-        return res.respond(409, { error: "Username does not exists" });
+        return res.respond(409, { error: "Username does not exists", msg: error.message });
       } else {
         console.error("An unknown error occurred:", error);
         return res.respond(500, { error: "Internal Server Error" });

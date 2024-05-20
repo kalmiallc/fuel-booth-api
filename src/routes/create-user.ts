@@ -27,12 +27,16 @@ export async function resolve(req: Request, res: Response): Promise<void> {
   if (users.isValid()) {
 
     try {
-      const player_profile = await register_player_profile(body["username"]);
+      let email = "";
+      if ('email' in body) {
+        email = body["email"];
+      }
+      const player_profile = await register_player_profile(body["username"], email);
       console.log("player_profile --------------------------------------", player_profile);
 
       await users.create();
       //await users.update();
-      return res.respond(201, { success: "ok" });
+      return res.respond(201, { success: "ok" , player_profile: player_profile});
 
     } catch (error) {
       

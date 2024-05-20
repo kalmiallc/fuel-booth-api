@@ -14,10 +14,11 @@ export async function submit_final_score(username: string, time_seconds: number,
   const counterContract = GameScoreContractAbi__factory.connect(CONTRACT_ID, myWallet);
 
   try {
+    const score_status = 1;
     const callResult = await counterContract.functions
-    .hash_and_submit_score(username, 0, damage, time_seconds, 0, 1)
+    .hash_and_submit_score(username, 0, damage, time_seconds, 0, score_status)
     .call();
-    return callResult.value;
+    return callResult.transactionId;
 
 } catch (error) {
     if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
@@ -35,10 +36,11 @@ export async function submit_track_score(username: string, time_seconds: number,
     const counterContract = GameScoreContractAbi__factory.connect(CONTRACT_ID, myWallet);
   
     try {
+      const score_status = 0;
         const callResult = await counterContract.functions
-        .hash_and_submit_score(username, distance, damage, time_seconds, speed, 0)
+        .hash_and_submit_score(username, distance, damage, time_seconds, speed, score_status)
         .call();
-        return callResult.value;
+        return callResult.transactionId;
   
   } catch (error) {
       if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
