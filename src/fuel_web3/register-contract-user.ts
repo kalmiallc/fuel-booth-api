@@ -36,9 +36,15 @@ export async function register_player_profile(username: string, email: string) {
             };
         return decoded_value;
     }
-        
-
-    return callResult.value;
+    return {
+      email: "",
+      register_transaction_id: "",
+      username: "",
+      high_score: 0,
+      player_id: 0,
+      username_and_email_hash: "",
+      username_hash: ""
+    }
 
 } catch (error) {
     if (error instanceof Error && error.message.includes("UsernameExists")) {

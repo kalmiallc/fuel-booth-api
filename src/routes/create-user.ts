@@ -1,5 +1,6 @@
 import { Application } from "express";
 import { NextFunction, Request, Response } from "../http";
+import { RouteErrorCode, SerializedStrategy } from '../config/values';
 import { PopulateStrategy } from "../config/values";
 import { ValidationError } from "../lib/errors";
 import { User } from "../models/user";
@@ -16,27 +17,32 @@ export function inject(app: Application) {
 
 export async function resolve(req: Request, res: Response): Promise<void> {
   const { context, body } = req;
-  const users = new User({}, context).populate(body, PopulateStrategy.ADMIN);
+  const user = new User({}, context).populate(body, PopulateStrategy.ADMIN);
 
   try {
-    await users.validate();
+    await user.validate();
   } catch (err) {
-    await users.handle(err);
+    await user.handle(err);
   }
 
-  if (users.isValid()) {
+  if (user.isValid()) {
 
     try {
-      let email = "";
-      if ('email' in body) {
-        email = body["email"];
-      }
-      const player_profile = await register_player_profile(body["username"], email);
-      console.log("player_profile --------------------------------------", player_profile);
+      // register on chain
+      const player_profile = await register_player_profile(user.username, user.email);
+      console.log("player_profile ", player_profile);
 
-      await users.create();
-      //await users.update();
-      return res.respond(201, { success: "ok" , player_profile: player_profile});
+      // save data from chain
+      user.register_transaction_id = player_profile.register_transaction_id;
+      user.player_contract_index_id = player_profile.player_id;
+      user.username_email_hash = player_profile.username_and_email_hash;
+      user.username_hash = player_profile.username_hash;
+      user.high_score = Number(player_profile.high_score);
+
+      // store in DB
+      await user.create();
+
+      return res.respond(201, user.serialize(SerializedStrategy.PROFILE));      
 
     } catch (error) {
       
@@ -47,6 +53,6 @@ export async function resolve(req: Request, res: Response): Promise<void> {
       
     }
   } else {
-    throw new ValidationError(users, context, "create-user");
+    throw new ValidationError(user, context, "create-user");
   }
 }

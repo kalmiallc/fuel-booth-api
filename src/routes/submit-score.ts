@@ -3,61 +3,55 @@ import { NextFunction, Request, Response } from '../http';
 import { RouteErrorCode, SerializedStrategy } from '../config/values';
 import { ResourceError, ValidationError } from '../lib/errors';
 import { User } from '../models/user';
-import {submit_final_score, submit_track_score} from '../fuel_web3/submit-contract-score';
+import {submit_race_score} from '../fuel_web3/submit-contract-score';
 import { env } from "../config/env";
 
 
 export function inject(app: Application) {
-    app.post('/final-score-user', (req: Request, res: Response, next: NextFunction) => {
-      resolveFinalScore(req, res).catch(next);
+    app.post('/users/score', (req: Request, res: Response, next: NextFunction) => {
+      resolveScore(req, res).catch(next);
     });
   
-    // http://127.0.0.1:3002/track-score-user/direktor?time_seconds=120&damage=15&distance=300&speed=300
-    app.get('/track-score-user/:username', (req: Request, res: Response, next: NextFunction) => {
-      resolveTrackScore(req, res).catch(next);
-    });
 }
   
-export async function resolveFinalScore(req: Request, res: Response): Promise<void> {
-    const { body } = req;
-    const { username, time_seconds, damage } = body;
+
+export async function resolveScore(req: Request, res: Response): Promise<void> {
+  const {  body } = req;
+  const { username, time_seconds, damage, distance, speed, score_type } = body;
+
+  // Log the incoming request data
+  console.log('Request Data:', { username, time_seconds, damage, distance, speed, score_type });
   
-    if (!username || !time_seconds || !damage) {
-      throw new ValidationError(null, null, "Missing required fields");
-    }
-  
-    try {
-      const transactionId = await submit_final_score(username, time_seconds, damage);
-      return res.respond(201, { success: "ok", transactionId: transactionId });
-    } catch (error) {
-      if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
-        return res.respond(409, { error: "Username does not exists" });
-      } else {
-        console.error("An unknown error occurred:", error);
-        return res.respond(500, { error: "Internal Server Error" });
-      }
-    }
-}
+
+  // Validate the presence of required fields
+  if (!username || !time_seconds || !damage || !distance || !speed || !score_type) {
+    throw new ValidationError(null, null, "Missing required fields");
+  }
+
+  // Fetch the user and update their score details
+  const user = await new User({}, req.context).populateByUsername(username);
+  if (!user) {  throw new Error('User not found');  }
 
 
-export async function resolveTrackScore(req: Request, res: Response): Promise<void> {
-    const { params, query } = req;
-    const { username } = params;
-    const { time_seconds, damage, distance, speed } = query;
-  
-    if (!username || !time_seconds || !damage || !distance|| !speed) {
-      throw new ResourceError(RouteErrorCode.INVALID_REQUEST, null, 'track-score-users');
-    }
-  
-    try {
-      const transactionId = await submit_track_score(username, Number(time_seconds), Number(damage), Number(distance), Number(speed));
-      return res.respond(200, { success: "ok", transactionId: transactionId });
-    } catch (error) {
-      if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
-        return res.respond(409, { error: "Username does not exists", msg: error.message });
-      } else {
-        console.error("An unknown error occurred:", error);
-        return res.respond(500, { error: "Internal Server Error" });
-      }
+  user.speed = 0.0; 
+  user.damage = 0.0;  // Number(Number(damage).toFixed(2));
+  user.distance = 0.0;  // Number(Number(distance).toFixed(2));
+  user.time_seconds = 0.0;  // Number(Number(time_seconds).toFixed(2));
+  user.score_type = score_type;
+  user.update();
+
+  console.log("user ", user.serialize(SerializedStrategy.ADMIN));
+
+  try {
+    let transactionId: string = await submit_race_score(score_type, username, Number(time_seconds), Number(damage), Number(distance), Number(speed));
+
+    return res.respond(200, { success: "ok", transactionId: transactionId });
+  } catch (error) {
+    if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
+      return res.respond(409, { error: "Username does not exists", msg: error.message });
+    } else {
+      console.error("An unknown error occurred:", error);
+      return res.respond(500, { error: "Internal Server Error" });
     }
   }
+}

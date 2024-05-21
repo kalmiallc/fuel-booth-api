@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from '../http';
 import { RouteErrorCode, SerializedStrategy } from '../config/values';
 import { ResourceError, ValidationError } from '../lib/errors';
 import { User } from '../models/user';
-import { get_players_profiles } from '../fuel_web3/get-contract-users';
+import { get_sorted_players_profiles } from '../fuel_web3/get-contract-users';
 import { env } from "../config/env";
 
 
@@ -22,7 +22,7 @@ export async function resolve(req: Request, res: Response): Promise<void> {
   if (!params || !params.username ) {
     
     try {
-      const decoded_users = await get_players_profiles();
+      const decoded_users = await get_sorted_players_profiles();
       return res.respond(200, {
         "decoded_users": decoded_users,
       });

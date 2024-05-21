@@ -8,7 +8,7 @@ import type { GameScoreContractAbi} from "../sway-api";
 const CONTRACT_ID = env.CONTRACT_ID;
 const privateKey = env.SIGNER_PRIVATE_KEY;
 
-export async function get_players_profiles() {
+export async function get_sorted_players_profiles() {
   const provider = await Provider.create(FUEL_BETA_5_NETWORK_URL);
   const myWallet: WalletUnlocked = Wallet.fromPrivateKey(privateKey, provider);
   const counterContract = GameScoreContractAbi__factory.connect(CONTRACT_ID, myWallet);
@@ -39,3 +39,4 @@ export async function get_players_profiles() {
 
   return decoded_users;
 }
+
