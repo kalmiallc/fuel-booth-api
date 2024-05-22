@@ -46,7 +46,10 @@ export async function resolveScore(req: Request, res: Response): Promise<void> {
 
   try {
     let result = await submit_race_score(score_type, username, Number(time_seconds), Number(damage), Number(distance), Number(speed));
-    user.high_score = Number(result.high_score);
+    if (user.high_score < Number(result.high_score)){
+      user.high_score = Number(result.high_score);
+    }
+    
 
     user.update(SerializedStrategy.SCORE);
     
