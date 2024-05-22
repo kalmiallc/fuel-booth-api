@@ -1,6 +1,7 @@
 import { presenceValidator } from "@rawmodel/validators";
 import {
   PopulateStrategy,
+  ScoreType,
   SerializedStrategy,
   SystemErrorCode,
   ValidatorErrorCode,
@@ -14,9 +15,6 @@ import { SqlError } from "../lib/errors";
 import { getQueryParams, selectAndCountQuery } from "../lib/sql-utils";
 
 export class User extends BaseSqlModel {
-  /**
-   * wallet
-   */
   protected _tableName = "user";
 
   /**
@@ -58,6 +56,192 @@ export class User extends BaseSqlModel {
     fakeValue: "user",
   })
   public username: string;
+
+  /**
+   * username_hash
+   */
+  @prop({
+    parser: { resolver: stringParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: "user_hash",
+  })
+  public username_hash: string;
+
+  /**
+   * username_email_hash
+   */
+  @prop({
+    parser: { resolver: stringParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: "username_email_hash",
+  })
+  public username_email_hash: string;
+
+  /**
+   * high_score
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [
+      PopulateStrategy.DB,
+      PopulateStrategy.ADMIN,
+      PopulateStrategy.SCORE,
+    ],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
+    ],
+    fakeValue: 0,
+    defaultValue: 0,
+  })
+  public high_score: number;
+
+  /**
+   * register_transaction_id
+   */
+  @prop({
+    parser: { resolver: stringParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: "", // ""
+  })
+  public register_transaction_id: string;
+
+  /**
+   * player_contract_index_id
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+    ],
+    fakeValue: 0,
+  })
+  public player_contract_index_id: number;
+
+  /**
+   * damage
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [
+      PopulateStrategy.DB,
+      PopulateStrategy.ADMIN,
+      PopulateStrategy.SCORE,
+    ],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
+    ],
+    fakeValue: 0,
+    defaultValue: 0,
+  })
+  public damage: number;
+
+  /**
+   * distance
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [
+      PopulateStrategy.DB,
+      PopulateStrategy.ADMIN,
+      PopulateStrategy.SCORE,
+    ],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
+    ],
+    fakeValue: 0,
+    defaultValue: 0,
+  })
+  public distance: number;
+
+  /**
+   * speed
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [
+      PopulateStrategy.DB,
+      PopulateStrategy.ADMIN,
+      PopulateStrategy.SCORE,
+    ],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
+    ],
+    fakeValue: 0,
+    defaultValue: 0,
+  })
+  public speed: number;
+
+  /**
+   * time_seconds
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [
+      PopulateStrategy.DB,
+      PopulateStrategy.ADMIN,
+      PopulateStrategy.SCORE,
+    ],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
+    ],
+    fakeValue: 0,
+    defaultValue: 0,
+  })
+  public time_seconds: number;
+
+  /**
+   * score_type
+   */
+  @prop({
+    parser: { resolver: integerParser() },
+    populatable: [
+      PopulateStrategy.DB,
+      PopulateStrategy.ADMIN,
+      PopulateStrategy.SCORE,
+    ],
+    serializable: [
+      SerializedStrategy.DB,
+      SerializedStrategy.PROFILE,
+      SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
+    ],
+    fakeValue: ScoreType.FINISHED,
+    defaultValue: 0,
+  })
+  public score_type: ScoreType;
 
   /**
    * Class constructor.
@@ -147,11 +331,8 @@ export class User extends BaseSqlModel {
       qGroup: `
         `,
       qFilter: `
-        ORDER BY ${
-          filters.orderArr
-            ? `${filters.orderArr.join(", ") || "u.updateTime DESC"}`
-            : "u.updateTime DESC"
-        }
+        ORDER BY u.high_score DESC
+        
         ${
           filters.limit !== null
             ? `LIMIT ${filters.limit} OFFSET ${filters.offset}`

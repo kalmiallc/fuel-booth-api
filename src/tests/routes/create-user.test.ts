@@ -24,7 +24,8 @@ describe("create user", () => {
   test("Create user", async () => {
     const data = {
       email: "test@test.com",
-      username: "test",
+      username: "test5",
+      score_type: 0,
     };
 
     const res = await request(stage.app).post("/users").send(data);

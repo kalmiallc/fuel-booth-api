@@ -13,6 +13,17 @@ describe("get user", () => {
     stage = await createContextAndStartServer();
     await setupTestDatabase();
     await new User({}, stage.context).fake().create();
+    await new User({}, stage.context)
+      .populate({ email: "test@test.com", username: "test5", high_score: 10 })
+      .create();
+
+    await new User({}, stage.context)
+      .populate({
+        email: "test6@test.com",
+        username: "test6",
+        high_score: 6,
+      })
+      .create();
   });
 
   afterAll(async () => {
@@ -20,12 +31,11 @@ describe("get user", () => {
     await stopServerAndCloseMySqlContext(stage);
   });
 
-  test("get user", async () => {
+  test("get users", async () => {
     const res = await request(stage.app).get("/users");
 
-    console.log(res.body);
-
-    expect(res.body.data.items.length).toBe(1);
-    expect(res.body.data.total).toBe(1);
+    expect(res.body.data.items.length).toBe(3);
+    expect(res.body.data.total).toBe(3);
+    expect(res.body.data.items[0].high_score).toBe(10);
   });
 });

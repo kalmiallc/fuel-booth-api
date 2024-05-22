@@ -2,19 +2,21 @@
  * Serialized strategy.
  */
 export enum SerializedStrategy {
-  PROFILE = 'profile',
-  DB = 'db',
-  EXTENDED_DB = 'extended_db',
-  ADMIN = 'admin',
+  PROFILE = "profile",
+  DB = "db",
+  EXTENDED_DB = "extended_db",
+  ADMIN = "admin",
+  SCORE = "score",
 }
 
 /**
  * Populate strategy.
  */
 export enum PopulateStrategy {
-  ADMIN = 'admin',
-  PROFILE = 'profile',
-  DB = 'db',
+  ADMIN = "admin",
+  PROFILE = "profile",
+  DB = "db",
+  SCORE = "score",
 }
 
 /**
@@ -37,8 +39,8 @@ export enum PaginationValues {
  * Request Token types.
  */
 export enum RequestToken {
-  AUTH_ADMIN = 'authAdmin',
-  AIRDROP_EMAIL = 'airdropEmail',
+  AUTH_ADMIN = "authAdmin",
+  AIRDROP_EMAIL = "airdropEmail",
 }
 
 /**
@@ -82,10 +84,10 @@ export enum RouteErrorCode {
   PROFILE_CREDENTIALS_INVALID = 400002,
   REQUEST_TOKEN_INVALID = 400003,
   USER_DOES_NOT_EXIST = 400004,
-  SIGNATURE_NOT_PRESENT = 400005,
-  REQUEST_TOKEN_NOT_PRESENT = 400006,
-  AIRDROP_ALREADY_CLAIMED = 400007,
-  INVALID_SIGNATURE = 400008,
-  INVALID_ADMIN = 400009,
-  AIRDROP_ERROR = 400010,
+  USER_ALREADY_EXISTS = 400005,
+}
+
+export enum ScoreType {
+  RACING = 0,
+  FINISHED = 1,
 }

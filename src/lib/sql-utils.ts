@@ -70,6 +70,7 @@ function getOrderField(names, orders, tableAlias, map = {}) {
     names = ["id"];
   }
   const orderArray = [];
+
   for (const [idx, name] of names.entries()) {
     let adjustedName = map[name];
     if (!map[name]) {
