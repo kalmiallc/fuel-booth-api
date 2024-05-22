@@ -369,7 +369,7 @@ const _abi = {
       "name": "hash_and_submit_score",
       "output": {
         "name": "",
-        "type": 0,
+        "type": 17,
         "typeArguments": null
       },
       "attributes": [
@@ -532,7 +532,7 @@ const _abi = {
       "name": "submit_score",
       "output": {
         "name": "",
-        "type": 0,
+        "type": 17,
         "typeArguments": null
       },
       "attributes": [

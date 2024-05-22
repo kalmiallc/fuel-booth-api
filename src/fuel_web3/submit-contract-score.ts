@@ -36,7 +36,10 @@ export async function submit_race_score(
         const callResult = await counterContract.functions
         .hash_and_submit_score(username, distance, damage, time_seconds, speed, scoreStatus)
         .call();
-        return callResult.transactionId;
+        const high_score = callResult.value.valueOf();
+        console.log("callResult.value high_score-------------------- ");
+        console.log(high_score);
+        return { transactionId: callResult.transactionId, high_score: callResult.value.valueOf()};
   } catch (error) {
       if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
         throw new Error("UsernameDoesNotExists error: Username does not exists On Chain");

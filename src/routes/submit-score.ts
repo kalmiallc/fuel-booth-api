@@ -38,14 +38,15 @@ export async function resolveScore(req: Request, res: Response): Promise<void> {
   user.distance = 0.0;  // Number(Number(distance).toFixed(2));
   user.time_seconds = 0.0;  // Number(Number(time_seconds).toFixed(2));
   user.score_type = score_type;
-  user.update();
+  
 
   console.log("user ", user.serialize(SerializedStrategy.ADMIN));
 
   try {
-    let transactionId: string = await submit_race_score(score_type, username, Number(time_seconds), Number(damage), Number(distance), Number(speed));
-
-    return res.respond(200, { success: "ok", transactionId: transactionId });
+    let result = await submit_race_score(score_type, username, Number(time_seconds), Number(damage), Number(distance), Number(speed));
+    user.high_score = Number(result.high_score);
+    user.update();
+    return res.respond(200, { success: "ok", transactionId: result.transactionId, high_score: result.high_score });
   } catch (error) {
     if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {
       return res.respond(409, { error: "Username does not exists", msg: error.message });

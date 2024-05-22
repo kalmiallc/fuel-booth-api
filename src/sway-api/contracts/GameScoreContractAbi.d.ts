@@ -78,12 +78,12 @@ export class GameScoreContractAbi extends Contract {
   interface: GameScoreContractAbiInterface;
   functions: {
     hash_and_register: InvokeFunction<[username: StdString, username_email_hash: string], PlayerProfileOutput>;
-    hash_and_submit_score: InvokeFunction<[username: StdString, distance: BigNumberish, damage: BigNumberish, time: BigNumberish, speed: BigNumberish, status: BigNumberish], void>;
+    hash_and_submit_score: InvokeFunction<[username: StdString, distance: BigNumberish, damage: BigNumberish, time: BigNumberish, speed: BigNumberish, status: BigNumberish], BN>;
     player: InvokeFunction<[username_hash: string], Option<PlayerProfileOutput>>;
     players: InvokeFunction<[], Vec<PlayerProfileOutput>>;
     register: InvokeFunction<[username: StdString, username_hash: string, username_email_hash: string], PlayerProfileOutput>;
     scores: InvokeFunction<[username_hash: string], Vec<ScoreOutput>>;
-    submit_score: InvokeFunction<[username_hash: string, distance: BigNumberish, damage: BigNumberish, time: BigNumberish, speed: BigNumberish, status: BigNumberish], void>;
+    submit_score: InvokeFunction<[username_hash: string, distance: BigNumberish, damage: BigNumberish, time: BigNumberish, speed: BigNumberish, status: BigNumberish], BN>;
     total_players: InvokeFunction<[], BN>;
     username: InvokeFunction<[vector_index: BigNumberish], StdString>;
   };
