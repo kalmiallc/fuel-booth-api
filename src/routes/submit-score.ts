@@ -47,7 +47,9 @@ export async function resolveScore(req: Request, res: Response): Promise<void> {
   try {
     let result = await submit_race_score(score_type, username, Number(time_seconds), Number(damage), Number(distance), Number(speed));
     user.high_score = Number(result.high_score);
-    user.update();
+
+    user.update(SerializedStrategy.SCORE);
+    
     return res.respond(200, { success: "ok", transactionId: result.transactionId, high_score: result.high_score });
   } catch (error) {
     if (error instanceof Error && error.message.includes("UsernameDoesNotExists")) {

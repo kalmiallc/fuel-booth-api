@@ -6,6 +6,7 @@ export enum SerializedStrategy {
   DB = 'db',
   EXTENDED_DB = 'extended_db',
   ADMIN = 'admin',
+  SCORE = 'score',
 }
 
 /**
@@ -15,6 +16,7 @@ export enum PopulateStrategy {
   ADMIN = 'admin',
   PROFILE = 'profile',
   DB = 'db',
+  SCORE = 'score',
 }
 
 /**

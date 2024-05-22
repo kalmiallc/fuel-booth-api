@@ -103,11 +103,12 @@ export class User extends BaseSqlModel {
    */
   @prop({
     parser: { resolver: integerParser() },
-    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN, PopulateStrategy.SCORE],
     serializable: [
       SerializedStrategy.DB,
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
     ],
     fakeValue: 0,
   })
@@ -149,11 +150,12 @@ export class User extends BaseSqlModel {
    */
   @prop({
     parser: { resolver: integerParser() },
-    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN, PopulateStrategy.SCORE],
     serializable: [
       SerializedStrategy.DB,
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
     ],
     fakeValue: 0,
   })
@@ -164,11 +166,12 @@ export class User extends BaseSqlModel {
    */
   @prop({
     parser: { resolver: integerParser() },
-    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN, PopulateStrategy.SCORE],
     serializable: [
       SerializedStrategy.DB,
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
     ],
     fakeValue: 0,
   })
@@ -179,11 +182,12 @@ export class User extends BaseSqlModel {
    */
   @prop({
     parser: { resolver: integerParser() },
-    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN, PopulateStrategy.SCORE],
     serializable: [
       SerializedStrategy.DB,
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
     ],
     fakeValue: 0,
   })
@@ -194,11 +198,12 @@ export class User extends BaseSqlModel {
    */
   @prop({
     parser: { resolver: integerParser() },
-    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN, PopulateStrategy.SCORE],
     serializable: [
       SerializedStrategy.DB,
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
     ],
     fakeValue: 0,
   })
@@ -209,11 +214,12 @@ export class User extends BaseSqlModel {
    */
   @prop({
     parser: { resolver: stringParser() },
-    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN],
+    populatable: [PopulateStrategy.DB, PopulateStrategy.ADMIN, PopulateStrategy.SCORE],
     serializable: [
       SerializedStrategy.DB,
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
+      SerializedStrategy.SCORE,
     ],
     fakeValue: "track", // "final"
   })
