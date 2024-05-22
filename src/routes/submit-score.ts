@@ -28,17 +28,19 @@ export async function resolveScore(req: Request, res: Response): Promise<void> {
     throw new ValidationError(null, null, "Missing required fields");
   }
 
-  // Fetch the user and update their score details
   const user = await new User({}, req.context).populateByUsername(username);
   if (!user) {  throw new Error('User not found');  }
 
 
-  user.speed = 0.0; 
-  user.damage = 0.0;  // Number(Number(damage).toFixed(2));
-  user.distance = 0.0;  // Number(Number(distance).toFixed(2));
-  user.time_seconds = 0.0;  // Number(Number(time_seconds).toFixed(2));
-  user.score_type = score_type;
-  
+  const parsedSpeed = typeof speed === 'string' ? parseFloat(speed) : speed;
+  const parsedDamage = typeof damage === 'string' ? parseFloat(damage) : damage;
+  const parsedDistance = typeof distance === 'string' ? parseFloat(distance) : distance;
+
+  user.speed = Math.round(parsedSpeed * 10000);
+  user.damage = Math.round(parsedDamage * 100);
+  user.distance = Math.round(parsedDistance);
+  user.time_seconds = time_seconds;
+  user.score_type = score_type;  
 
   console.log("user ", user.serialize(SerializedStrategy.ADMIN));
 
