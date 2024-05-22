@@ -128,6 +128,22 @@ export abstract class BaseSqlModel extends BaseModel {
     } else {
       return this.reset();
     }
+  }  
+  
+  public async populateByUsername(username: string) {
+    const data = await this.db().paramQuery(
+      `
+      SELECT * FROM ${this._tableName}
+      WHERE username = @username
+    `,
+      { username }
+    );
+
+    if (data && data.length) {
+      return this.populate(data[0], PopulateStrategy.DB);
+    } else {
+      return this.reset();
+    }
   }
 
   public async populateByIdConn(id: number, conn: PoolConnection) {

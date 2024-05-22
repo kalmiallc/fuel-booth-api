@@ -29,21 +29,22 @@ export class User extends BaseSqlModel {
       SerializedStrategy.ADMIN,
     ],
     validators: [
-      {
-        resolver: presenceValidator(),
-        code: ValidatorErrorCode.PROFILE_EMAIL_NOT_PRESENT,
-      },
-      {
-        resolver: uniqueFieldValue("user", "email"),
-        code: ValidatorErrorCode.PROFILE_EMAIL_ALREADY_TAKEN,
-      },
+      // {
+      //   resolver: presenceValidator(),
+      //   code: ValidatorErrorCode.PROFILE_EMAIL_NOT_PRESENT,
+      // },
+      // {
+      //   resolver: uniqueFieldValue("user", "email"),
+      //   code: ValidatorErrorCode.PROFILE_EMAIL_ALREADY_TAKEN,
+      // },
     ],
     fakeValue: "test@email.com",
+    defaultValue: null,
   })
   public email: string;
 
   /**
-   * nft_id
+   * username
    */
   @prop({
     parser: { resolver: stringParser() },
@@ -52,6 +53,16 @@ export class User extends BaseSqlModel {
       SerializedStrategy.DB,
       SerializedStrategy.PROFILE,
       SerializedStrategy.ADMIN,
+    ],
+    validators: [
+      {
+        resolver: presenceValidator(),
+        code: ValidatorErrorCode.PROFILE_USERNAME_NOT_PRESENT,
+      },
+      {
+        resolver: uniqueFieldValue("user", "username"),
+        code: ValidatorErrorCode.PROFILE_USERNAME_ALREADY_TAKEN,
+      },
     ],
     fakeValue: "user",
   })
@@ -226,7 +237,7 @@ export class User extends BaseSqlModel {
    * score_type
    */
   @prop({
-    parser: { resolver: integerParser() },
+    parser: { resolver: stringParser() },
     populatable: [
       PopulateStrategy.DB,
       PopulateStrategy.ADMIN,
@@ -317,7 +328,19 @@ export class User extends BaseSqlModel {
     const sqlQuery = {
       qSelect: `
         SELECT
-          u.id, u.email, u.username,
+          u.id, 
+          u.email, 
+          u.username, 
+          u.username_hash,
+          u.high_score, 
+          u.player_contract_index_id,
+          u.register_transaction_id,
+          u.username_email_hash,
+          u.damage,
+          u.distance,
+          u.speed,
+          u.time_seconds,
+          u.score_type,
           u.createTime, u.updateTime
         `,
       qFrom: `

@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "../http";
 import { RouteErrorCode, SerializedStrategy } from "../config/values";
 import { ResourceError, ValidationError } from "../lib/errors";
 import { User } from "../models/user";
-import { get_sorted_players_profiles } from "../fuel/get-contract-users";
+import { get_sorted_players_profiles } from "../fuel_web3/get-contract-users";
 import { env } from "../config/env";
 
 export function inject(app: Application) {
