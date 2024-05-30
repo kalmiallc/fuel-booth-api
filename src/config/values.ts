@@ -93,4 +93,5 @@ export enum RouteErrorCode {
 export enum ScoreType {
   RACING = 0,
   FINISHED = 1,
+  DESTROYED = 2,
 }

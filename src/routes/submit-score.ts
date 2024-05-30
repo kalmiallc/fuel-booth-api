@@ -47,11 +47,9 @@ export async function resolve(req: Request, res: Response): Promise<void> {
       user.score_type,
       user.username,
       user.time_seconds,
-      user.damage,
       user.distance,
-      user.speed
     );
-
+    user.high_score = parseInt(result.high_score);
     await user.update(SerializedStrategy.SCORE);
 
     return res.respond(200, {

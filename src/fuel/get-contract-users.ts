@@ -1,8 +1,7 @@
 import { env } from "../config/env";
-import { BN, Provider, Wallet, WalletUnlocked, Fuel , FUEL_BETA_5_NETWORK_URL, FUEL_NETWORK_URL} from "fuels";
+import { Provider, Wallet, WalletUnlocked, FUEL_BETA_5_NETWORK_URL} from "fuels";
 
 import { GameScoreContractAbi__factory  } from "../sway-api";
-import type { GameScoreContractAbi} from "../sway-api";
 
 
 const CONTRACT_ID = env.CONTRACT_ID;

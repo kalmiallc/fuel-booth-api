@@ -20,9 +20,7 @@ export async function submitRaceScore(
   scoreType: ScoreType,
   username: string,
   time_seconds: number,
-  damage: number,
-  distance: number,
-  speed: number
+  distance: number
 ) {
   const provider = await Provider.create(FUEL_BETA_5_NETWORK_URL);
   const myWallet: WalletUnlocked = Wallet.fromPrivateKey(privateKey, provider);
@@ -30,16 +28,22 @@ export async function submitRaceScore(
     CONTRACT_ID,
     myWallet
   );
-
+  
+  let numericScoreType: number;
+  if (typeof scoreType === 'string') {
+    numericScoreType = ScoreType[scoreType as keyof typeof ScoreType];
+  } else {
+    numericScoreType = scoreType;
+  }
+  console.log("numericScoreType-------------------- ");
+  console.log(numericScoreType);
   try {
     const callResult = await counterContract.functions
-      .hash_and_submit_score(
+      .submit_score(
         username,
         distance,
-        damage,
         time_seconds,
-        speed,
-        scoreType
+        numericScoreType
       )
       .call();
     const high_score = callResult.value.valueOf();

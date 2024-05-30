@@ -1,16 +1,12 @@
 import { env } from "../config/env";
 import {
-  BN,
   Provider,
   Wallet,
   WalletUnlocked,
-  Fuel,
   FUEL_BETA_5_NETWORK_URL,
-  FUEL_NETWORK_URL,
 } from "fuels";
 import { arrayify, hexlify, getRandomB256, Bytes, randomBytes } from "fuels";
 import { GameScoreContractAbi__factory } from "../sway-api";
-import type { GameScoreContractAbi } from "../sway-api";
 
 const CONTRACT_ID = env.CONTRACT_ID;
 const privateKey = env.SIGNER_PRIVATE_KEY;
@@ -29,7 +25,7 @@ export async function registerPlayerProfile(username: string, email: string) {
   let usernameEmailHash = bytes32String;
   try {
     const callResult = await counterContract.functions
-      .hash_and_register(username, usernameEmailHash)
+      .register(username, usernameEmailHash)
       .call();
 
     if (callResult.value) {

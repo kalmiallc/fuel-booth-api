@@ -29,21 +29,21 @@ export enum GetErrorOutput { UsernameDoesNotExists = 'UsernameDoesNotExists', In
 export enum SetErrorInput { ValueAlreadySet = 'ValueAlreadySet', UsernameExists = 'UsernameExists', UsernameAlreadyUsedEmail = 'UsernameAlreadyUsedEmail' };
 export enum SetErrorOutput { ValueAlreadySet = 'ValueAlreadySet', UsernameExists = 'UsernameExists', UsernameAlreadyUsedEmail = 'UsernameAlreadyUsedEmail' };
 
-export type FinishScoreEventInput = { damage: BigNumberish, username_hash: string, result_time_in_seconds: BigNumberish };
-export type FinishScoreEventOutput = { damage: BN, username_hash: string, result_time_in_seconds: BN };
+export type DestroyedScoreEventInput = { username_hash: string, distance: BigNumberish };
+export type DestroyedScoreEventOutput = { username_hash: string, distance: BN };
+export type FinishScoreEventInput = { username_hash: string, result_time_in_seconds: BigNumberish };
+export type FinishScoreEventOutput = { username_hash: string, result_time_in_seconds: BN };
 export type PlayerProfileInput = { high_score: BigNumberish, username_hash: string, usernames_vector_index: BigNumberish, username_and_email_hash: string, has_email_set: boolean };
 export type PlayerProfileOutput = { high_score: BN, username_hash: string, usernames_vector_index: BN, username_and_email_hash: string, has_email_set: boolean };
 export type RacingScoreEventInput = { score: ScoreInput, username_hash: string };
 export type RacingScoreEventOutput = { score: ScoreOutput, username_hash: string };
 export type RawBytesInput = { ptr: BigNumberish, cap: BigNumberish };
 export type RawBytesOutput = { ptr: BN, cap: BN };
-export type ScoreInput = { time: BigNumberish, speed: BigNumberish, status: BigNumberish, damage: BigNumberish, distance: BigNumberish };
-export type ScoreOutput = { time: BN, speed: BN, status: BN, damage: BN, distance: BN };
+export type ScoreInput = { time: BigNumberish, status: BigNumberish, distance: BigNumberish };
+export type ScoreOutput = { time: BN, status: BN, distance: BN };
 
 interface GameScoreContractAbiInterface extends Interface {
   functions: {
-    hash_and_register: FunctionFragment;
-    hash_and_submit_score: FunctionFragment;
     player: FunctionFragment;
     players: FunctionFragment;
     register: FunctionFragment;
@@ -53,18 +53,14 @@ interface GameScoreContractAbiInterface extends Interface {
     username: FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: 'hash_and_register', values: [StdString, string]): Uint8Array;
-  encodeFunctionData(functionFragment: 'hash_and_submit_score', values: [StdString, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]): Uint8Array;
   encodeFunctionData(functionFragment: 'player', values: [string]): Uint8Array;
   encodeFunctionData(functionFragment: 'players', values: []): Uint8Array;
-  encodeFunctionData(functionFragment: 'register', values: [StdString, string, string]): Uint8Array;
+  encodeFunctionData(functionFragment: 'register', values: [StdString, string]): Uint8Array;
   encodeFunctionData(functionFragment: 'scores', values: [string]): Uint8Array;
-  encodeFunctionData(functionFragment: 'submit_score', values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]): Uint8Array;
+  encodeFunctionData(functionFragment: 'submit_score', values: [StdString, BigNumberish, BigNumberish, BigNumberish]): Uint8Array;
   encodeFunctionData(functionFragment: 'total_players', values: []): Uint8Array;
   encodeFunctionData(functionFragment: 'username', values: [BigNumberish]): Uint8Array;
 
-  decodeFunctionData(functionFragment: 'hash_and_register', data: BytesLike): DecodedValue;
-  decodeFunctionData(functionFragment: 'hash_and_submit_score', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'player', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'players', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'register', data: BytesLike): DecodedValue;
@@ -77,13 +73,11 @@ interface GameScoreContractAbiInterface extends Interface {
 export class GameScoreContractAbi extends Contract {
   interface: GameScoreContractAbiInterface;
   functions: {
-    hash_and_register: InvokeFunction<[username: StdString, username_email_hash: string], PlayerProfileOutput>;
-    hash_and_submit_score: InvokeFunction<[username: StdString, distance: BigNumberish, damage: BigNumberish, time: BigNumberish, speed: BigNumberish, status: BigNumberish], BN>;
     player: InvokeFunction<[username_hash: string], Option<PlayerProfileOutput>>;
     players: InvokeFunction<[], Vec<PlayerProfileOutput>>;
-    register: InvokeFunction<[username: StdString, username_hash: string, username_email_hash: string], PlayerProfileOutput>;
+    register: InvokeFunction<[username: StdString, username_email_hash: string], PlayerProfileOutput>;
     scores: InvokeFunction<[username_hash: string], Vec<ScoreOutput>>;
-    submit_score: InvokeFunction<[username_hash: string, distance: BigNumberish, damage: BigNumberish, time: BigNumberish, speed: BigNumberish, status: BigNumberish], BN>;
+    submit_score: InvokeFunction<[username: StdString, distance: BigNumberish, time: BigNumberish, status: BigNumberish], BN>;
     total_players: InvokeFunction<[], BN>;
     username: InvokeFunction<[vector_index: BigNumberish], StdString>;
   };
