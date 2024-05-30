@@ -29,18 +29,14 @@ export enum GetErrorOutput { UsernameDoesNotExists = 'UsernameDoesNotExists', In
 export enum SetErrorInput { ValueAlreadySet = 'ValueAlreadySet', UsernameExists = 'UsernameExists', UsernameAlreadyUsedEmail = 'UsernameAlreadyUsedEmail' };
 export enum SetErrorOutput { ValueAlreadySet = 'ValueAlreadySet', UsernameExists = 'UsernameExists', UsernameAlreadyUsedEmail = 'UsernameAlreadyUsedEmail' };
 
-export type DestroyedScoreEventInput = { username_hash: string, distance: BigNumberish };
-export type DestroyedScoreEventOutput = { username_hash: string, distance: BN };
-export type FinishScoreEventInput = { username_hash: string, result_time_in_seconds: BigNumberish };
-export type FinishScoreEventOutput = { username_hash: string, result_time_in_seconds: BN };
 export type PlayerProfileInput = { high_score: BigNumberish, username_hash: string, usernames_vector_index: BigNumberish, username_and_email_hash: string, has_email_set: boolean };
 export type PlayerProfileOutput = { high_score: BN, username_hash: string, usernames_vector_index: BN, username_and_email_hash: string, has_email_set: boolean };
-export type RacingScoreEventInput = { score: ScoreInput, username_hash: string };
-export type RacingScoreEventOutput = { score: ScoreOutput, username_hash: string };
 export type RawBytesInput = { ptr: BigNumberish, cap: BigNumberish };
 export type RawBytesOutput = { ptr: BN, cap: BN };
 export type ScoreInput = { time: BigNumberish, status: BigNumberish, distance: BigNumberish };
 export type ScoreOutput = { time: BN, status: BN, distance: BN };
+export type ScoreEventInput = { score: ScoreInput, username_hash: string };
+export type ScoreEventOutput = { score: ScoreOutput, username_hash: string };
 
 interface GameScoreContractAbiInterface extends Interface {
   functions: {

@@ -19,7 +19,7 @@ const privateKey = env.SIGNER_PRIVATE_KEY;
 export async function submitRaceScore(
   scoreType: ScoreType,
   username: string,
-  time_seconds: number,
+  timeSeconds: number,
   distance: number
 ) {
   const provider = await Provider.create(FUEL_BETA_5_NETWORK_URL);
@@ -35,23 +35,21 @@ export async function submitRaceScore(
   } else {
     numericScoreType = scoreType;
   }
-  console.log("numericScoreType-------------------- ");
-  console.log(numericScoreType);
+  console.log(scoreType, " to numericScoreType---------------- ", numericScoreType);
   try {
     const callResult = await counterContract.functions
       .submit_score(
         username,
         distance,
-        time_seconds,
+        timeSeconds,
         numericScoreType
       )
       .call();
     const high_score = callResult.value.valueOf();
-    console.log("callResult.value high_score-------------------- ");
-    console.log(high_score);
+    console.log("callResult.value high_score-------------------- ", high_score);
     return {
       transactionId: callResult.transactionId,
-      high_score: callResult.value.valueOf(),
+      high_score: high_score,
     };
   } catch (error) {
     if (

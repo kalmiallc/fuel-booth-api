@@ -109,12 +109,12 @@ const _abi = {
       "components": [
         {
           "name": "buf",
-          "type": 13,
+          "type": 10,
           "typeArguments": null
         },
         {
           "name": "len",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         }
       ],
@@ -122,45 +122,11 @@ const _abi = {
     },
     {
       "typeId": 9,
-      "type": "struct DestroyedScoreEvent",
-      "components": [
-        {
-          "name": "username_hash",
-          "type": 1,
-          "typeArguments": null
-        },
-        {
-          "name": "distance",
-          "type": 18,
-          "typeArguments": null
-        }
-      ],
-      "typeParameters": null
-    },
-    {
-      "typeId": 10,
-      "type": "struct FinishScoreEvent",
-      "components": [
-        {
-          "name": "username_hash",
-          "type": 1,
-          "typeArguments": null
-        },
-        {
-          "name": "result_time_in_seconds",
-          "type": 18,
-          "typeArguments": null
-        }
-      ],
-      "typeParameters": null
-    },
-    {
-      "typeId": 11,
       "type": "struct PlayerProfile",
       "components": [
         {
           "name": "high_score",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         },
         {
@@ -170,7 +136,7 @@ const _abi = {
         },
         {
           "name": "usernames_vector_index",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         },
         {
@@ -187,12 +153,70 @@ const _abi = {
       "typeParameters": null
     },
     {
+      "typeId": 10,
+      "type": "struct RawBytes",
+      "components": [
+        {
+          "name": "ptr",
+          "type": 7,
+          "typeArguments": null
+        },
+        {
+          "name": "cap",
+          "type": 16,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": null
+    },
+    {
+      "typeId": 11,
+      "type": "struct RawVec",
+      "components": [
+        {
+          "name": "ptr",
+          "type": 7,
+          "typeArguments": null
+        },
+        {
+          "name": "cap",
+          "type": 16,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": [
+        6
+      ]
+    },
+    {
       "typeId": 12,
-      "type": "struct RacingScoreEvent",
+      "type": "struct Score",
+      "components": [
+        {
+          "name": "time",
+          "type": 16,
+          "typeArguments": null
+        },
+        {
+          "name": "status",
+          "type": 16,
+          "typeArguments": null
+        },
+        {
+          "name": "distance",
+          "type": 16,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": null
+    },
+    {
+      "typeId": 13,
+      "type": "struct ScoreEvent",
       "components": [
         {
           "name": "score",
-          "type": 15,
+          "type": 12,
           "typeArguments": null
         },
         {
@@ -204,65 +228,7 @@ const _abi = {
       "typeParameters": null
     },
     {
-      "typeId": 13,
-      "type": "struct RawBytes",
-      "components": [
-        {
-          "name": "ptr",
-          "type": 7,
-          "typeArguments": null
-        },
-        {
-          "name": "cap",
-          "type": 18,
-          "typeArguments": null
-        }
-      ],
-      "typeParameters": null
-    },
-    {
       "typeId": 14,
-      "type": "struct RawVec",
-      "components": [
-        {
-          "name": "ptr",
-          "type": 7,
-          "typeArguments": null
-        },
-        {
-          "name": "cap",
-          "type": 18,
-          "typeArguments": null
-        }
-      ],
-      "typeParameters": [
-        6
-      ]
-    },
-    {
-      "typeId": 15,
-      "type": "struct Score",
-      "components": [
-        {
-          "name": "time",
-          "type": 18,
-          "typeArguments": null
-        },
-        {
-          "name": "status",
-          "type": 18,
-          "typeArguments": null
-        },
-        {
-          "name": "distance",
-          "type": 18,
-          "typeArguments": null
-        }
-      ],
-      "typeParameters": null
-    },
-    {
-      "typeId": 16,
       "type": "struct String",
       "components": [
         {
@@ -274,12 +240,12 @@ const _abi = {
       "typeParameters": null
     },
     {
-      "typeId": 17,
+      "typeId": 15,
       "type": "struct Vec",
       "components": [
         {
           "name": "buf",
-          "type": 14,
+          "type": 11,
           "typeArguments": [
             {
               "name": "",
@@ -290,7 +256,7 @@ const _abi = {
         },
         {
           "name": "len",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         }
       ],
@@ -299,7 +265,7 @@ const _abi = {
       ]
     },
     {
-      "typeId": 18,
+      "typeId": 16,
       "type": "u64",
       "components": null,
       "typeParameters": null
@@ -321,7 +287,7 @@ const _abi = {
         "typeArguments": [
           {
             "name": "",
-            "type": 11,
+            "type": 9,
             "typeArguments": null
           }
         ]
@@ -340,11 +306,11 @@ const _abi = {
       "name": "players",
       "output": {
         "name": "",
-        "type": 17,
+        "type": 15,
         "typeArguments": [
           {
             "name": "",
-            "type": 11,
+            "type": 9,
             "typeArguments": null
           }
         ]
@@ -362,7 +328,7 @@ const _abi = {
       "inputs": [
         {
           "name": "username",
-          "type": 16,
+          "type": 14,
           "typeArguments": null
         },
         {
@@ -374,7 +340,7 @@ const _abi = {
       "name": "register",
       "output": {
         "name": "",
-        "type": 11,
+        "type": 9,
         "typeArguments": null
       },
       "attributes": [
@@ -398,11 +364,11 @@ const _abi = {
       "name": "scores",
       "output": {
         "name": "",
-        "type": 17,
+        "type": 15,
         "typeArguments": [
           {
             "name": "",
-            "type": 15,
+            "type": 12,
             "typeArguments": null
           }
         ]
@@ -420,29 +386,29 @@ const _abi = {
       "inputs": [
         {
           "name": "username",
-          "type": 16,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "distance",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         },
         {
           "name": "time",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         },
         {
           "name": "status",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         }
       ],
       "name": "submit_score",
       "output": {
         "name": "",
-        "type": 18,
+        "type": 16,
         "typeArguments": null
       },
       "attributes": [
@@ -459,7 +425,7 @@ const _abi = {
       "name": "total_players",
       "output": {
         "name": "",
-        "type": 18,
+        "type": 16,
         "typeArguments": null
       },
       "attributes": [
@@ -475,14 +441,14 @@ const _abi = {
       "inputs": [
         {
           "name": "vector_index",
-          "type": 18,
+          "type": 16,
           "typeArguments": null
         }
       ],
       "name": "username",
       "output": {
         "name": "",
-        "type": 16,
+        "type": 14,
         "typeArguments": null
       },
       "attributes": [
@@ -524,7 +490,7 @@ const _abi = {
       "logId": 3,
       "loggedType": {
         "name": "",
-        "type": 10,
+        "type": 13,
         "typeArguments": []
       }
     },
@@ -532,7 +498,7 @@ const _abi = {
       "logId": 4,
       "loggedType": {
         "name": "",
-        "type": 9,
+        "type": 13,
         "typeArguments": []
       }
     },
@@ -540,7 +506,7 @@ const _abi = {
       "logId": 5,
       "loggedType": {
         "name": "",
-        "type": 12,
+        "type": 13,
         "typeArguments": []
       }
     },
