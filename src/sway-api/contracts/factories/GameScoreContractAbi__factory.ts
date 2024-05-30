@@ -498,22 +498,6 @@ const _abi = {
       "logId": 4,
       "loggedType": {
         "name": "",
-        "type": 13,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 5,
-      "loggedType": {
-        "name": "",
-        "type": 13,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 6,
-      "loggedType": {
-        "name": "",
         "type": 3,
         "typeArguments": []
       }
