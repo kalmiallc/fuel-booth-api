@@ -10,508 +10,482 @@
 */
 
 import { Interface, Contract, ContractFactory } from "fuels";
-import type { Provider, Account, AbstractAddress, BytesLike, DeployContractOptions, StorageSlot } from "fuels";
-import type { GameScoreContractAbi, GameScoreContractAbiInterface } from "../GameScoreContractAbi";
+import type {
+  Provider,
+  Account,
+  AbstractAddress,
+  BytesLike,
+  DeployContractOptions,
+  StorageSlot,
+} from "fuels";
+import type {
+  GameScoreContractAbi,
+  GameScoreContractAbiInterface,
+} from "../GameScoreContractAbi";
 
 const _abi = {
-  "types": [
+  encoding: "1",
+  types: [
     {
-      "typeId": 0,
-      "type": "()",
-      "components": [],
-      "typeParameters": null
+      typeId: 0,
+      type: "()",
+      components: [],
+      typeParameters: null,
     },
     {
-      "typeId": 1,
-      "type": "b256",
-      "components": null,
-      "typeParameters": null
+      typeId: 1,
+      type: "b256",
+      components: null,
+      typeParameters: null,
     },
     {
-      "typeId": 2,
-      "type": "bool",
-      "components": null,
-      "typeParameters": null
+      typeId: 2,
+      type: "bool",
+      components: null,
+      typeParameters: null,
     },
     {
-      "typeId": 3,
-      "type": "enum GetError",
-      "components": [
+      typeId: 3,
+      type: "enum GetError",
+      components: [
         {
-          "name": "UsernameDoesNotExists",
-          "type": 0,
-          "typeArguments": null
+          name: "UsernameDoesNotExists",
+          type: 0,
+          typeArguments: null,
         },
         {
-          "name": "IndexIsOverMax",
-          "type": 0,
-          "typeArguments": null
-        }
+          name: "IndexIsOverMax",
+          type: 0,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 4,
-      "type": "enum Option",
-      "components": [
+      typeId: 4,
+      type: "enum Option",
+      components: [
         {
-          "name": "None",
-          "type": 0,
-          "typeArguments": null
+          name: "None",
+          type: 0,
+          typeArguments: null,
         },
         {
-          "name": "Some",
-          "type": 6,
-          "typeArguments": null
-        }
+          name: "Some",
+          type: 6,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": [
-        6
-      ]
+      typeParameters: [6],
     },
     {
-      "typeId": 5,
-      "type": "enum SetError",
-      "components": [
+      typeId: 5,
+      type: "enum SetError",
+      components: [
         {
-          "name": "ValueAlreadySet",
-          "type": 0,
-          "typeArguments": null
+          name: "ValueAlreadySet",
+          type: 0,
+          typeArguments: null,
         },
         {
-          "name": "UsernameExists",
-          "type": 0,
-          "typeArguments": null
+          name: "UsernameExists",
+          type: 0,
+          typeArguments: null,
         },
         {
-          "name": "UsernameAlreadyUsedEmail",
-          "type": 0,
-          "typeArguments": null
-        }
+          name: "UsernameAlreadyUsedEmail",
+          type: 0,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 6,
-      "type": "generic T",
-      "components": null,
-      "typeParameters": null
+      typeId: 6,
+      type: "generic T",
+      components: null,
+      typeParameters: null,
     },
     {
-      "typeId": 7,
-      "type": "raw untyped ptr",
-      "components": null,
-      "typeParameters": null
+      typeId: 7,
+      type: "raw untyped ptr",
+      components: null,
+      typeParameters: null,
     },
     {
-      "typeId": 8,
-      "type": "struct Bytes",
-      "components": [
+      typeId: 8,
+      type: "struct Bytes",
+      components: [
         {
-          "name": "buf",
-          "type": 10,
-          "typeArguments": null
+          name: "buf",
+          type: 10,
+          typeArguments: null,
         },
         {
-          "name": "len",
-          "type": 16,
-          "typeArguments": null
-        }
+          name: "len",
+          type: 16,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 9,
-      "type": "struct PlayerProfile",
-      "components": [
+      typeId: 9,
+      type: "struct PlayerProfile",
+      components: [
         {
-          "name": "high_score",
-          "type": 16,
-          "typeArguments": null
+          name: "high_score",
+          type: 16,
+          typeArguments: null,
         },
         {
-          "name": "username_hash",
-          "type": 1,
-          "typeArguments": null
+          name: "username_hash",
+          type: 1,
+          typeArguments: null,
         },
         {
-          "name": "usernames_vector_index",
-          "type": 16,
-          "typeArguments": null
+          name: "usernames_vector_index",
+          type: 16,
+          typeArguments: null,
         },
         {
-          "name": "username_and_email_hash",
-          "type": 1,
-          "typeArguments": null
+          name: "username_and_email_hash",
+          type: 1,
+          typeArguments: null,
         },
         {
-          "name": "has_email_set",
-          "type": 2,
-          "typeArguments": null
-        }
+          name: "has_email_set",
+          type: 2,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 10,
-      "type": "struct RawBytes",
-      "components": [
+      typeId: 10,
+      type: "struct RawBytes",
+      components: [
         {
-          "name": "ptr",
-          "type": 7,
-          "typeArguments": null
+          name: "ptr",
+          type: 7,
+          typeArguments: null,
         },
         {
-          "name": "cap",
-          "type": 16,
-          "typeArguments": null
-        }
+          name: "cap",
+          type: 16,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 11,
-      "type": "struct RawVec",
-      "components": [
+      typeId: 11,
+      type: "struct RawVec",
+      components: [
         {
-          "name": "ptr",
-          "type": 7,
-          "typeArguments": null
+          name: "ptr",
+          type: 7,
+          typeArguments: null,
         },
         {
-          "name": "cap",
-          "type": 16,
-          "typeArguments": null
-        }
+          name: "cap",
+          type: 16,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": [
-        6
-      ]
+      typeParameters: [6],
     },
     {
-      "typeId": 12,
-      "type": "struct Score",
-      "components": [
+      typeId: 12,
+      type: "struct Score",
+      components: [
         {
-          "name": "time",
-          "type": 16,
-          "typeArguments": null
+          name: "time",
+          type: 16,
+          typeArguments: null,
         },
         {
-          "name": "status",
-          "type": 16,
-          "typeArguments": null
+          name: "status",
+          type: 16,
+          typeArguments: null,
         },
         {
-          "name": "distance",
-          "type": 16,
-          "typeArguments": null
-        }
+          name: "distance",
+          type: 16,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 13,
-      "type": "struct ScoreEvent",
-      "components": [
+      typeId: 13,
+      type: "struct ScoreEvent",
+      components: [
         {
-          "name": "score",
-          "type": 12,
-          "typeArguments": null
+          name: "score",
+          type: 12,
+          typeArguments: null,
         },
         {
-          "name": "username_hash",
-          "type": 1,
-          "typeArguments": null
-        }
+          name: "username_hash",
+          type: 1,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 14,
-      "type": "struct String",
-      "components": [
+      typeId: 14,
+      type: "struct String",
+      components: [
         {
-          "name": "bytes",
-          "type": 8,
-          "typeArguments": null
-        }
+          name: "bytes",
+          type: 8,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": null
+      typeParameters: null,
     },
     {
-      "typeId": 15,
-      "type": "struct Vec",
-      "components": [
+      typeId: 15,
+      type: "struct Vec",
+      components: [
         {
-          "name": "buf",
-          "type": 11,
-          "typeArguments": [
+          name: "buf",
+          type: 11,
+          typeArguments: [
             {
-              "name": "",
-              "type": 6,
-              "typeArguments": null
-            }
-          ]
+              name: "",
+              type: 6,
+              typeArguments: null,
+            },
+          ],
         },
         {
-          "name": "len",
-          "type": 16,
-          "typeArguments": null
-        }
+          name: "len",
+          type: 16,
+          typeArguments: null,
+        },
       ],
-      "typeParameters": [
-        6
-      ]
+      typeParameters: [6],
     },
     {
-      "typeId": 16,
-      "type": "u64",
-      "components": null,
-      "typeParameters": null
-    }
+      typeId: 16,
+      type: "u64",
+      components: null,
+      typeParameters: null,
+    },
   ],
-  "functions": [
+  functions: [
     {
-      "inputs": [
+      inputs: [
         {
-          "name": "username_hash",
-          "type": 1,
-          "typeArguments": null
-        }
+          name: "username_hash",
+          type: 1,
+          typeArguments: null,
+        },
       ],
-      "name": "player",
-      "output": {
-        "name": "",
-        "type": 4,
-        "typeArguments": [
+      name: "player",
+      output: {
+        name: "",
+        type: 4,
+        typeArguments: [
           {
-            "name": "",
-            "type": 9,
-            "typeArguments": null
-          }
-        ]
+            name: "",
+            type: 9,
+            typeArguments: null,
+          },
+        ],
       },
-      "attributes": [
+      attributes: [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
+          name: "storage",
+          arguments: ["read"],
+        },
+      ],
     },
     {
-      "inputs": [],
-      "name": "players",
-      "output": {
-        "name": "",
-        "type": 15,
-        "typeArguments": [
+      inputs: [],
+      name: "players",
+      output: {
+        name: "",
+        type: 15,
+        typeArguments: [
           {
-            "name": "",
-            "type": 9,
-            "typeArguments": null
-          }
-        ]
+            name: "",
+            type: 9,
+            typeArguments: null,
+          },
+        ],
       },
-      "attributes": [
+      attributes: [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
+          name: "storage",
+          arguments: ["read"],
+        },
+      ],
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "name": "username",
-          "type": 14,
-          "typeArguments": null
+          name: "username",
+          type: 14,
+          typeArguments: null,
         },
         {
-          "name": "username_email_hash",
-          "type": 1,
-          "typeArguments": null
-        }
+          name: "username_email_hash",
+          type: 1,
+          typeArguments: null,
+        },
       ],
-      "name": "register",
-      "output": {
-        "name": "",
-        "type": 9,
-        "typeArguments": null
+      name: "register",
+      output: {
+        name: "",
+        type: 9,
+        typeArguments: null,
       },
-      "attributes": [
+      attributes: [
         {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
-          ]
-        }
-      ]
+          name: "storage",
+          arguments: ["read", "write"],
+        },
+      ],
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "name": "username_hash",
-          "type": 1,
-          "typeArguments": null
-        }
+          name: "username_hash",
+          type: 1,
+          typeArguments: null,
+        },
       ],
-      "name": "scores",
-      "output": {
-        "name": "",
-        "type": 15,
-        "typeArguments": [
+      name: "scores",
+      output: {
+        name: "",
+        type: 15,
+        typeArguments: [
           {
-            "name": "",
-            "type": 12,
-            "typeArguments": null
-          }
-        ]
+            name: "",
+            type: 12,
+            typeArguments: null,
+          },
+        ],
       },
-      "attributes": [
+      attributes: [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [
-        {
-          "name": "username",
-          "type": 14,
-          "typeArguments": null
+          name: "storage",
+          arguments: ["read"],
         },
-        {
-          "name": "distance",
-          "type": 16,
-          "typeArguments": null
-        },
-        {
-          "name": "time",
-          "type": 16,
-          "typeArguments": null
-        },
-        {
-          "name": "status",
-          "type": 16,
-          "typeArguments": null
-        }
       ],
-      "name": "submit_score",
-      "output": {
-        "name": "",
-        "type": 16,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "storage",
-          "arguments": [
-            "write"
-          ]
-        }
-      ]
     },
     {
-      "inputs": [],
-      "name": "total_players",
-      "output": {
-        "name": "",
-        "type": 16,
-        "typeArguments": null
-      },
-      "attributes": [
+      inputs: [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [
+          name: "username",
+          type: 14,
+          typeArguments: null,
+        },
         {
-          "name": "vector_index",
-          "type": 16,
-          "typeArguments": null
-        }
+          name: "distance",
+          type: 16,
+          typeArguments: null,
+        },
+        {
+          name: "time",
+          type: 16,
+          typeArguments: null,
+        },
+        {
+          name: "status",
+          type: 16,
+          typeArguments: null,
+        },
       ],
-      "name": "username",
-      "output": {
-        "name": "",
-        "type": 14,
-        "typeArguments": null
+      name: "submit_score",
+      output: {
+        name: "",
+        type: 16,
+        typeArguments: null,
       },
-      "attributes": [
+      attributes: [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    }
+          name: "storage",
+          arguments: ["write"],
+        },
+      ],
+    },
+    {
+      inputs: [],
+      name: "total_players",
+      output: {
+        name: "",
+        type: 16,
+        typeArguments: null,
+      },
+      attributes: [
+        {
+          name: "storage",
+          arguments: ["read"],
+        },
+      ],
+    },
+    {
+      inputs: [
+        {
+          name: "vector_index",
+          type: 16,
+          typeArguments: null,
+        },
+      ],
+      name: "username",
+      output: {
+        name: "",
+        type: 14,
+        typeArguments: null,
+      },
+      attributes: [
+        {
+          name: "storage",
+          arguments: ["read"],
+        },
+      ],
+    },
   ],
-  "loggedTypes": [
+  loggedTypes: [
     {
-      "logId": 0,
-      "loggedType": {
-        "name": "",
-        "type": 5,
-        "typeArguments": []
-      }
+      logId: "13791596350235125220",
+      loggedType: {
+        name: "",
+        type: 5,
+        typeArguments: [],
+      },
     },
     {
-      "logId": 1,
-      "loggedType": {
-        "name": "",
-        "type": 3,
-        "typeArguments": []
-      }
+      logId: "10839523024754898681",
+      loggedType: {
+        name: "",
+        type: 3,
+        typeArguments: [],
+      },
     },
     {
-      "logId": 2,
-      "loggedType": {
-        "name": "",
-        "type": 3,
-        "typeArguments": []
-      }
+      logId: "485526203506637955",
+      loggedType: {
+        name: "",
+        type: 13,
+        typeArguments: [],
+      },
     },
-    {
-      "logId": 3,
-      "loggedType": {
-        "name": "",
-        "type": 13,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 4,
-      "loggedType": {
-        "name": "",
-        "type": 3,
-        "typeArguments": []
-      }
-    }
   ],
-  "messagesTypes": [],
-  "configurables": []
+  messagesTypes: [],
+  configurables: [],
 };
 
 const _storageSlots: StorageSlot[] = [
   {
-    "key": "f383b0ce51358be57daa3b725fe44acdb2d880604e367199080b4379c41bb6ed",
-    "value": "0000000000000000000000000000000000000000000000000000000000000000"
-  }
+    key: "f383b0ce51358be57daa3b725fe44acdb2d880604e367199080b4379c41bb6ed",
+    value: "0000000000000000000000000000000000000000000000000000000000000000",
+  },
 ];
 
 export class GameScoreContractAbi__factory {
@@ -520,14 +494,18 @@ export class GameScoreContractAbi__factory {
   static readonly storageSlots = _storageSlots;
 
   static createInterface(): GameScoreContractAbiInterface {
-    return new Interface(_abi) as unknown as GameScoreContractAbiInterface
+    return new Interface(_abi) as unknown as GameScoreContractAbiInterface;
   }
 
   static connect(
     id: string | AbstractAddress,
     accountOrProvider: Account | Provider
   ): GameScoreContractAbi {
-    return new Contract(id, _abi, accountOrProvider) as unknown as GameScoreContractAbi
+    return new Contract(
+      id,
+      _abi,
+      accountOrProvider
+    ) as unknown as GameScoreContractAbi;
   }
 
   static async deployContract(
