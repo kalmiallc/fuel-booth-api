@@ -5,7 +5,7 @@ import {
   Wallet,
   WalletUnlocked,
   Fuel,
-  FUEL_BETA_5_NETWORK_URL,
+  FUEL_TESTNET_NETWORK_URL,
   FUEL_NETWORK_URL,
 } from "fuels";
 import { arrayify, hexlify, getRandomB256, Bytes, randomBytes } from "fuels";
@@ -22,28 +22,27 @@ export async function submitRaceScore(
   timeSeconds: number,
   distance: number
 ) {
-  const provider = await Provider.create(FUEL_BETA_5_NETWORK_URL);
+  const provider = await Provider.create(FUEL_TESTNET_NETWORK_URL);
   const myWallet: WalletUnlocked = Wallet.fromPrivateKey(privateKey, provider);
   const counterContract = GameScoreContractAbi__factory.connect(
     CONTRACT_ID,
     myWallet
   );
-  
+
   let numericScoreType: number;
-  if (typeof scoreType === 'string') {
+  if (typeof scoreType === "string") {
     numericScoreType = ScoreType[scoreType as keyof typeof ScoreType];
   } else {
     numericScoreType = scoreType;
   }
-  console.log(scoreType, " to numericScoreType---------------- ", numericScoreType);
+  console.log(
+    scoreType,
+    " to numericScoreType---------------- ",
+    numericScoreType
+  );
   try {
     const callResult = await counterContract.functions
-      .submit_score(
-        username,
-        distance,
-        timeSeconds,
-        numericScoreType
-      )
+      .submit_score(username, distance, timeSeconds, numericScoreType)
       .call();
     const high_score = callResult.value.valueOf();
     console.log("callResult.value high_score-------------------- ", high_score);
