@@ -123,7 +123,7 @@ const _abi = {
         },
         {
           name: "len",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
       ],
@@ -145,7 +145,7 @@ const _abi = {
         },
         {
           name: "usernames_vector_index",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
         {
@@ -172,7 +172,7 @@ const _abi = {
         },
         {
           name: "cap",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
       ],
@@ -189,7 +189,7 @@ const _abi = {
         },
         {
           name: "cap",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
       ],
@@ -201,17 +201,17 @@ const _abi = {
       components: [
         {
           name: "time",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
         {
           name: "status",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
         {
           name: "distance",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
       ],
@@ -263,7 +263,7 @@ const _abi = {
         },
         {
           name: "len",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
       ],
@@ -271,6 +271,12 @@ const _abi = {
     },
     {
       typeId: 16,
+      type: "u256",
+      components: null,
+      typeParameters: null,
+    },
+    {
+      typeId: 17,
       type: "u64",
       components: null,
       typeParameters: null,
@@ -387,17 +393,17 @@ const _abi = {
         },
         {
           name: "distance",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
         {
           name: "time",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
         {
           name: "status",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
       ],
@@ -419,7 +425,7 @@ const _abi = {
       name: "total_players",
       output: {
         name: "",
-        type: 16,
+        type: 17,
         typeArguments: null,
       },
       attributes: [
@@ -433,7 +439,7 @@ const _abi = {
       inputs: [
         {
           name: "vector_index",
-          type: 16,
+          type: 17,
           typeArguments: null,
         },
       ],
