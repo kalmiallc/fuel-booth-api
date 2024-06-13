@@ -17,6 +17,14 @@ export function inject(app: Application) {
 
 export async function resolve(req: Request, res: Response): Promise<void> {
   const { context, body } = req;
+  
+  if (body.email) {
+    const existingUser = await new User({}, context).populateByEmail(body.email);  
+    if (existingUser.isValid() && existingUser.email && body.username === existingUser.username) {
+      return res.respond(201, existingUser.serialize(SerializedStrategy.PROFILE));
+    }
+  }
+
   const user = new User({}, context).populate(body, PopulateStrategy.ADMIN);
 
   try {

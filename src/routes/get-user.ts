@@ -25,7 +25,7 @@ export async function resolve(req: Request, res: Response): Promise<void> {
 
   if (!params || !params.userId) {
     return res.respond(200, await new User({}, context).getList(query));
-  } else if (parseInt(params.articleId)) {
+  } else if (parseInt(params.userId)) {
     const user = await new User({}, context).populateById(
       parseInt(params.userId)
     );

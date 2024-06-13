@@ -20,7 +20,7 @@ export async function submitRaceScore(
   scoreType: ScoreType,
   username: string,
   timeSeconds: number,
-  distance: number
+  damage: number
 ) {
   const provider = await Provider.create(FUEL_TESTNET_NETWORK_URL);
   const myWallet: WalletUnlocked = Wallet.fromPrivateKey(privateKey, provider);
@@ -42,7 +42,7 @@ export async function submitRaceScore(
   );
   try {
     const callResult = await counterContract.functions
-      .submit_score(username, distance, timeSeconds, numericScoreType)
+      .submit_score(username, damage, timeSeconds, numericScoreType)
       .call();
     const high_score = callResult.value.valueOf();
     console.log("callResult.value high_score-------------------- ", high_score);
