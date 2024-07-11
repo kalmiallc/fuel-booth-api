@@ -13,6 +13,17 @@ It requires a fuel private key to create transactions and information about the 
 - node version 18+
 - deployed fuel smart contracts
 
+#### MySql docker
+
+You can run MySQL in docker. For that a docker compose file is prepared: `docker-compose.development.yaml`. You can change password and database in the file. `root` is the default user.
+
+To run it use:
+
+```sh
+docker-compose -f docker-compose.development.yaml build
+docker-compose -f docker-compose.development.yaml up -d
+```
+
 ### Environment
 
 You need to setup a `.env` file with variables described below. You can use `.env.sample` file as you basis for easy setup.
@@ -75,3 +86,7 @@ Development helper endpoints:
 
 - GET `/players`
 - GET `/balance`
+
+```
+
+```
